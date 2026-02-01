@@ -5,7 +5,7 @@
 
 import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 interface Message {
   id: string;
@@ -21,7 +21,7 @@ export class GdmChat extends LitElement {
   @state() isLoading = false;
   @state() error = '';
 
-  private client: GoogleGenAI;
+  private client: GoogleGenerativeAI;
   private messagesContainer: HTMLElement | null = null;
 
   static styles = css`
@@ -224,7 +224,7 @@ export class GdmChat extends LitElement {
   }
 
   private initClient() {
-    this.client = new GoogleGenAI({
+    this.client = new GoogleGenerativeAI({
       apiKey: process.env.GEMINI_API_KEY,
     });
   }
@@ -251,7 +251,7 @@ export class GdmChat extends LitElement {
     this.scrollToBottom();
 
     try {
-      const model = this.client.generativeModel({ model: 'gemini-2.5-flash' });
+      const model = this.client.getGenerativeModel({ model: 'gemini-2.5-flash' });
       
       const response = await model.generateContent(this.inputValue);
       const assistantMessage: Message = {

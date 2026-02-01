@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {GoogleGenAI, LiveServerMessage, Modality, Session} from '@google/genai';
+import {GoogleGenerativeAI, LiveServerMessage, Modality, Session} from '@google/generative-ai';
 import {LitElement, css, html} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {createBlob, decode, decodeAudioData} from './utils';
@@ -19,7 +19,7 @@ export class GdmLiveAudio extends LitElement {
   @state() status = '';
   @state() error = '';
 
-  private client: GoogleGenAI;
+  private client: GoogleGenerativeAI;
   private session: Session;
   private inputAudioContext = new (window.AudioContext ||
     window.webkitAudioContext)({sampleRate: 16000});
@@ -126,7 +126,7 @@ export class GdmLiveAudio extends LitElement {
   private async initClient() {
     this.initAudio();
 
-    this.client = new GoogleGenAI({
+    this.client = new GoogleGenerativeAI({
       apiKey: process.env.GEMINI_API_KEY,
     });
 
